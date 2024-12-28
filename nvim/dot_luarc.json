@@ -1,0 +1,14 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "get_python_path",
+        "listDiagnostics",
+        "leave_snippet",
+        "on_attach",
+        "Snacks"
+    ],
+    "diagnostics.disable": [
+        "undefined-doc-name",
+        "undefined-global"
+    ]
+}

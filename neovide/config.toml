@@ -1,0 +1,22 @@
+fork = false
+idle = true
+maximized = false
+no-multigrid = false
+srgb = true
+tabs = true
+theme = "auto"
+mouse-cursor-icon = "arrow"
+title-hidden = true
+vsync = true
+wsl = false
+decorations = "none"
+[font]
+size = 16
+hinting = "full"
+edging = "antialias"
+
+[[font.normal]]
+family = "IosevkaTerm Nerd Font"
+
+
+
