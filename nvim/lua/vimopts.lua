@@ -54,28 +54,28 @@ vim.g.mapleader = " "
 
 --Code Runner
 
-vim.keymap.set('n', '<leader>rr', ':RunCode<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>rt', ':RunFile tab<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>rcf', ':CRFiletype<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rr', '<CMD>RunCode<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rf', '<CMD>RunFile<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rt', '<CMD>RunFile tab<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rp', '<CMD>RunProject<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rc', '<CMD>RunClose<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>rcf', '<CMD>CRFiletype<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '<leader>rcp', ':CRProjects<CR>', { noremap = true, silent = false })
 
 
 -- Telescope setup
 --[[ vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>")
-vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>")
+
 vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>")
  ]] --
 
-
+vim.keymap.set("n", "<leader>fb", "<CMD>Telescope file_browser<CR>", { desc = "file_browser" })
 --toggle term
-vim.keymap.set("n", "<leader>tt", ":ToggleTerm<CR>", { noremap = true, silent = false })
+vim.keymap.set("n", "<leader>tt", "<CMD>ToggleTerm<CR>", { noremap = true, silent = false })
 
--- oil.nvim setup
-vim.keymap.set("n", "<leader>n", ":Oil --float<CR>", { desc = "Oil" })
---vim.keymap.set("n", "<leader>nb", ':lua require("oil").toggle_float()<CR>', { desc = "Oil Float" })
+-- nvim-tree setup
+vim.keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>", { desc = "NvimTree" })
+
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-f>", "<C-f>zz")
@@ -92,9 +92,9 @@ vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Co
 -- see error
 vim.keymap.set("n", "<leader>D", vim.diagnostic.open_float, { desc = "Diagnostics" })
 -- New tab
-vim.keymap.set("n", "te", "telescope-file-browser.actions.create")
-vim.keymap.set("n", "<tab>", ":tabnext<Return>")
-vim.keymap.set("n", "<s-tab>", ":tabprev<Return>")
+vim.keymap.set("n", "te", "<CMD>tabedit<Return>")
+vim.keymap.set("n", "<tab>", "<CMD>tabnext<Return>")
+vim.keymap.set("n", "<s-tab>", "<CMD>tabprev<Return>")
 -- Move window
 vim.keymap.set("n", "sh", "<C-w>h")
 vim.keymap.set("n", "sk", "<C-w>k")

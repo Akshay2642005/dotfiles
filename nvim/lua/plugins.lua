@@ -1,4 +1,3 @@
-
 -- lazy.nvim config
 local lazy_plugins = {
 }
