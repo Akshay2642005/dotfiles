@@ -21,7 +21,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
-
 -- vim opts
 require("vimopts")
 
@@ -29,14 +28,26 @@ require("vimopts")
 require("mappings")
 -- lazy.nvim setup
 require("lazy").setup("plugins", {
+  -- disable some rtp plugins
+  disabled_plugins = {
+    "gzip",
+    -- "matchit",
+    -- "matchparen",
+    "netrwPlugin",
+    "rplugin",
+    "tarPlugin",
+    "tohtml",
+    "tutor",
+    "zipPlugin",
+  },
   default = {
     lazy = true,
   },
 })
 
 -- theme
-vim.cmd("colorscheme vague")
-if vim.g.colors_name == "vague" then
+vim.cmd("colorscheme kanagawa-paper")
+if vim.g.colors_name == "vague" or vim.g.colors_name == "kanagawa-paper" then
   utils.color_overrides.vague_line_colors()
   utils.color_overrides.vague_status_colors()
 elseif vim.g.colors_name == "base16-black-metal-gorgoroth" then
@@ -78,9 +89,13 @@ vim.api.nvim_create_autocmd("Filetype", {
   end
 })
 
-
-
-
+--HotReload
+--[[ vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.lua",
+  callback = function()
+    vim.cmd("%source " .. vim.fn.expand('<afile>'))
+  end,
+}) ]]
 
 -- treesitter config
 local config = require("nvim-treesitter.configs")
@@ -104,6 +119,10 @@ config.setup({
     "sql",
     "wgsl",
     "asm",
+    "html",
+    "css",
+    "yaml",
+    "java",
   },
   highlight = { enable = true },
   indent = { enable = true },
@@ -327,15 +346,14 @@ require 'lspconfig'.html.setup {
   cmd = { "vscode-html-language-server", "--stdio" }
 }
 
-require('lspconfig').ts_ls.setup {
+--[[ require('lspconfig').tsserver.setup {
   cmd = { "typescript-language-server", "--stdio" }
-}
+} ]]
 
-
-
+vim.cmd("colorscheme kanagawa-paper")
 if vim.g.neovide then
-  vim.cmd("colorscheme kanagawa-paper")
-  vim.g.guifont = "Hack Nerd Font:h14"
+  vim.cmd("colorscheme mellow")
+  vim.g.guifont = "JetBrainsMono Nerd Font:h14"
   --vim.g.guifont = "IosevkaTerm Nerd Font:h14"
   vim.g.neovide_padding_top = 10;
   vim.g.neovide_padding_bottom = 5;
@@ -344,7 +362,5 @@ if vim.g.neovide then
   vim.g.neovide_text_gamma = 1;
   vim.g.neovide_text_contrast = 1;
   vim.g.neovide_transparency = 1;
-  vim.cmd([[
-  let g:transparent_enabled = 0
-]])
+  vim.g.neovide_title_text_color = "pink";
 end

@@ -4,8 +4,8 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          solidity ="solc $fileName",
-        }
+          solidity = "solc $fileName",
+        },
       }
     end
   },

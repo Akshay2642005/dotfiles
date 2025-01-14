@@ -11,14 +11,6 @@ vim.opt.showcmd = true
 vim.opt.smartindent = true
 vim.opt.shell = "pwsh -NoLogo"
 vim.opt.fillchars = { eob = " " }
-
-local utils = require("utils")
-local os_name = utils.get_os()
-if os_name == "windows" then
-  vim.cmd("set shell=pwsh")
-else
-  --vim.cmd("set shell=/bin/zsh")
-end
 vim.cmd("set shellcmdflag=-c")
 vim.cmd("set shellquote=")
 vim.cmd("set shellxquote=")
@@ -64,14 +56,9 @@ vim.keymap.set('n', '<leader>rcp', ':CRProjects<CR>', { noremap = true, silent =
 
 
 -- Telescope setup
---[[ vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>")
-
-vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>")
- ]] --
 
 vim.keymap.set("n", "<leader>fb", "<CMD>Telescope file_browser<CR>", { desc = "file_browser" })
---toggle term
-vim.keymap.set("n", "<leader>tt", "<CMD>ToggleTerm<CR>", { noremap = true, silent = false })
+
 
 -- nvim-tree setup
 vim.keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>", { desc = "NvimTree" })
@@ -87,6 +74,9 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+
+--Terminal
+vim.keymap.set('n', '<c-t>', '<CMD>ToggleTerm<CR>')
 
 
 -- see error

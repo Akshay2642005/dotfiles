@@ -1,109 +1,203 @@
-return {
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({
-        PATH = "prepend",
-      })
-    end,
+local M = {
+  "neovim/nvim-lspconfig",
+  lazy = false,
+  dependencies = {
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
+    { "saghen/blink.cmp" },
+    { "SmiteshP/nvim-navic" },
   },
-  {
-    "mfussenegger/nvim-jdtls",
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "rust_analyzer",
-          "gopls",
-          "templ",
-          --"html",
-          "cssls",
-          "tailwindcss",
-          "ts_ls",
-          "pylsp",
-          "clangd",
-          "prismals",
-          "yamlls",
-          "jsonls",
-          "eslint",
-          "zls",
-          "marksman",
-          "wgsl_analyzer",
-        },
-      })
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+}
 
-      local lspconfig = require("lspconfig")
-      lspconfig.zls.setup({
-        capabilities = capabilities,
-        cmd = { "zls" },
+function M.on_attach(client, bufnr)
+  local navic = require("nvim-navic")
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+end
+
+function M.config()
+  local lspconfig = require("lspconfig")
+  local mason_lspconfig = require("mason-lspconfig")
+  local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+  }
+  vim.diagnostic.config({
+    virtual_text = false,
+  })
+
+
+  -- Diagnostics symbols for display in the sign column.
+  local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  end
+
+  require("mason").setup({
+    ui = {
+      border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+      icons = {
+        package_installed = "✓",
+        package_pending = "➜",
+        package_uninstalled = "✗"
+      }
+    }
+  })
+  mason_lspconfig.setup {
+    ensure_installed = {
+      "lua_ls",
+      "rust_analyzer",
+      "gopls",
+      "templ",
+      "cssls",
+      "tailwindcss",
+      "ts_ls",
+      "pylsp",
+      "clangd",
+      "prismals",
+      "yamlls",
+      "eslint",
+      "zls",
+      "marksman",
+      "wgsl_analyzer",
+    },
+  }
+  mason_lspconfig.setup_handlers {
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function(server_name) -- default handler (optional)
+      lspconfig[server_name].setup {
+        on_attach = M.on_attach,
+        capabilities,
+      }
+    end,
+    ["html"] = function()
+      lspconfig.html.setup({
+        on_attach = M.on_attach,
+        capabilities,
+        filetypes = { "html" }
       })
-      lspconfig.hls.setup({
-        capabilities = capabilities,
-        -- on_attach = function()
-        -- 	vim.cmd([[
-        --     augroup LspFormatting
-        --       autocmd! * <buffer>
-        --       autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-        --     augroup END
-        --   ]])
-        -- end,
+    end,
+    ["rust_analyzer"] = function(server_name)
+      lspconfig.rust_analyzer.setup({
+        on_attach = M.on_attach,
+        capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            enable = "true",
+            assist = {
+              importGranularity = "module",
+              importPrefix = "by_self",
+            },
+            cargo = {
+              autoreload = true,
+              buildScripts = {
+                enable = true,
+                overrideCommand = {
+                  "build",
+                  "--package",
+                  "--bin",
+                  "--example",
+                  "--all-targets",
+                },
+              },
+              noDefaultFeatures = true,
+              targetDir = "./target",
+            },
+            diagnostics = {
+              enable = true,
+              disabled = {
+                "unresolved-proc-macro",
+                "macro-error",
+                "unused-import",
+                "unused-variable",
+              },
+              enableExperimental = true,
+            },
+            procMacro = {
+              enable = true
+            },
+            checkOnSave = {
+              command = "clippy"
+            },
+          }
+        }
       })
+    end,
+    ["jsonls"] = function(server_name)
+      lspconfig.jsonls.setup({
+        on_attach = M.on_attach,
+        capabilities,
+        commands = {
+          Format = {
+            function()
+              vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
+            end
+          }
+        }
+      })
+    end,
+
+    ["lua_ls"] = function(server_name)
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
-      lspconfig.wgsl_analyzer.setup({
+    end,
+
+    ["ts_ls"] = function(server_name)
+      lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
-      lspconfig.jsonls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.prismals.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.yamlls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.html.setup({
-        capabilities = capabilities,
-        filetypes = {
-          "templ",
-          "html",
-          --[["css"],
-          "javascriptreact",
-          "typescriptreact",
-          "javascript",
-          "typescript",
-          "jsx",
-          "tsx",]]
+    end,
+
+    ["clangd"] = function(server_name)
+      lspconfig.clangd.setup({
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--pch-storage=memory",
+          "--all-scopes-completion",
+          "--pretty",
+          "--header-insertion=never",
+          "-j=4",
+          "--inlay-hints",
+          "--header-insertion-decorators",
+          "--function-arg-placeholders",
+          "--completion-style=detailed",
         },
-      })
-      lspconfig.solidity_ls.setup({
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+        root_dir = require("lspconfig").util.root_pattern("src"),
+        init_option = { fallbackFlags = { "-std=c++2a" } },
         capabilities = capabilities,
-        on_attach = on_attach,
-        cmd = { "vscode-solidity-server", "--stdio" },
-        --cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-        filetypes = { "solidity" },
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
       })
-      lspconfig.htmx.setup({
-        capabilities = capabilities,
-        filetypes = { "html", "templ" },
-      })
+    end,
+    ["emmet_ls"] = function(server_name)
       lspconfig.emmet_ls.setup({
         capabilities = capabilities,
         filetypes = {
@@ -119,6 +213,8 @@ return {
           "markdown",
         },
       })
+    end,
+    ["tailwindcss"] = function(server_name)
       lspconfig.tailwindcss.setup({
         capabilities = capabilities,
         filetypes = {
@@ -146,122 +242,27 @@ return {
           ".git"
         ),
       })
+    end,
+    ["templ"] = function(server_name)
       lspconfig.templ.setup({
         capabilities = capabilities,
         filetypes = { "templ" },
       })
-      lspconfig.ts_ls.setup({
-        capabilties = capabilities,
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
-      })
+    end,
+
+    ["eslint"] = function(server_name)
       lspconfig.eslint.setup({
         capabilties = capabilities,
       })
+    end,
 
-      require("lspconfig").gleam.setup({
-        capabilities = capabilities,
-      })
-
-      require("lspconfig").clangd.setup({
-        cmd = {
-          "clangd",
-          "--background-index",
-          "--pch-storage=memory",
-          "--all-scopes-completion",
-          "--pretty",
-          "--header-insertion=never",
-          "-j=4",
-          "--inlay-hints",
-          "--header-insertion-decorators",
-          "--function-arg-placeholders",
-          "--completion-style=detailed",
-        },
-        filetypes = { "c", "cpp", "objc", "objcpp" },
-        root_dir = require("lspconfig").util.root_pattern("src"),
-        init_option = { fallbackFlags = { "-std=c++2a" } },
-        capabilities = capabilities,
-      })
-
-      function get_python_path()
-        -- Check if there's an active virtual environment
-        local venv_path = os.getenv("VIRTUAL_ENV")
-        if venv_path then
-          return venv_path .. "/bin/python3"
-        else
-          -- get os name
-          local os_name = require("utils").get_os()
-          -- get os interpreter path
-          if os_name == "windows" then
-            return "C:/python312"
-          elseif os_name == "linux" then
-            return "/usr/bin/python3"
-          else
-            return nil
-          end
-          -- Fallback to global Python interpreter
-        end
-      end
-
-      lspconfig.pylsp.setup({
-        capabilties = capabilities,
-        settings = {
-          python = {
-            pythonPath = get_python_path(),
-          },
-        },
-      })
-
+    ["marksman"] = function(server_name)
       lspconfig.marksman.setup({
         capabilties = capabilities,
       })
-
-      lspconfig.rust_analyzer.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-          ["rust-analyzer"] = {
-            enable = "true",
-            assist = {
-              importGranularity = "module",
-              importPrefix = "by_self",
-            },
-            cargo = {
-              autoreload = true,
-              buildScripts = {
-                enable = true,
-                overrideCommand = {
-                  "build",
-                  "--package",
-                  "--bin",
-                  "--example",
-                  "--all-targets",
-                },
-              },
-              noDefaultFeatures = true,
-              targetDir = "./target",
-            },
-            diagnostics = {
-              enable = true,
-            },
-            procMacro = {
-              enable = true,
-            },
-          },
-        },
-        -- cmd = { "rust-analyzer" },
-        -- filetypes = { "rust" },
-        -- root_dir = function(fname)
-        --   return util.root_pattern("Cargo.toml", "rust-project.json")(fname) or util.find_git_ancestor(fname)
-        -- end,
-      })
-      lspconfig.gleam.setup({
-        capabilties = capabilities,
-      })
     end,
-  },
-}
+  }
+  -- require("ufo").setup()
+end
+
+return M

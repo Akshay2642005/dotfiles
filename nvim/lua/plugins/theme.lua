@@ -3,6 +3,45 @@ return {
     "xiyaowong/transparent.nvim",
   },
   {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("kanagawa").setup({
+        undercurl = true,
+        transparent = false,
+        terminalColors = true,
+        dimInactive = true,
+        commentStyle = { italic = true },
+        functionStyle = { italic = false },
+        keywordStyle = { italic = false, bold = false },
+        statementStyle = { italic = false, bold = false },
+        typeStyle = { italic = false },
+        colors = {
+          theme = {
+            ui = {
+            }
+          },
+          palette = {
+            dragonBlack4 = "#181616",
+            waveBlue1 = "#181616",
+          }
+        },                     -- override default palette and theme colors
+        overrides = function() -- override highlight groups
+          return {}
+        end,
+      })
+    end,
+  },
+  {
+    -- Rose-pine - Soho vibes for Neovim
+    "rose-pine/neovim",
+    name = "rose-pine",
+    opts = {
+      dark_variant = "main"
+    }
+  },
+  {
     "vague2k/vague.nvim",
     config = function(_, opts)
       require("vague").setup({
@@ -48,14 +87,8 @@ return {
         },
       })
       require("vague").setup(opts)
-      vim.cmd("colorscheme vague")
+      --[[       vim.cmd("colorscheme vague") ]]
     end,
-  },
-  {
-    "jnurmine/Zenburn",
-  },
-  {
-    "RRethy/base16-nvim",
   },
   {
     "catppuccin/nvim",
@@ -117,17 +150,35 @@ return {
     end
   },
   {
-    "rebelot/kanagawa.nvim",
-    name = "kanagawa",
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      require("kanagawa").setup({
-        transprent = true
+      require("gruvbox").setup({
+        dark = "hard",
+        light = "hard",
+        transparent = true,
+        contrast = "soft",
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = true,
+        terminal_colors = true,
+        disable_background = false,
+        disable_bold = false,
+        styles = {
+          comments = "italic",
+          functions = "italic",
+          keywords = "italic",
+          strings = "NONE",
+          variables = "NONE",
+          numbers = "NONE",
+          booleans = "NONE",
+          properties = "NONE",
+          types = "NONE",
+          operators = "NONE",
+        },
       })
-    end,
-  },
-  {
-    "sainnhe/gruvbox-material",
+    end
   },
   {
     "sho-87/kanagawa-paper.nvim",
@@ -146,12 +197,24 @@ return {
         keywordStyle = { italic = false, bold = false },
         statementStyle = { italic = false, bold = false },
         typeStyle = { italic = false },
-        colors = { theme = {}, palette = {} }, -- override default palette and theme colors
-        overrides = function()                 -- override highlight groups
+        colors = {
+          palette = {
+            sumiInk0 = "#181616",
+            sumiInk4 = "#181616",
+            sumiInk3 = "#181616",
+            sumiInk1 = "#181616",
+            waveBlue1 = "#181616",
+            lotusInk0 = "#282727"
+          },
+        },                     -- override default palette and theme colors
+        overrides = function() -- override highlight groups
           return {}
         end,
       })
     end,
+  },
+  {
+    "mellow-theme/mellow.nvim"
   },
   {
     "0xstepit/flow.nvim",
