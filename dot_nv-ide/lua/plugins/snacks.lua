@@ -71,7 +71,7 @@ return {
       preset = {
         keys = {
           { icon = " ", key = "e", desc = "New file", action = ":ene | startinsert" },
-          { icon = "ﭯ ", key = "o", desc = "Recently opened files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = "ﭯ ", key = "o", desc = "Recently opened files", action = ":lua Snacks.dashboard,pick('oldfiles')" },
           { icon = " ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
           { icon = " ", key = "r", desc = "Find word", action = ":lua Snacks.dashboard.pick('live_grep')" },
           { icon = " ", key = "g", desc = "Find modified file", action = ":lua Snacks.dashboard.pick('git_status')" },
@@ -85,7 +85,8 @@ return {
               local config_path = vim.fn.stdpath('config')
               vim.cmd('cd ' .. config_path)
               -- Trigger the Snacks.dashboard.pick function
-              Snacks.dashboard.pick('files', { cwd = config_path })
+              --Snacks.dashboard.pick('files', { cwd = config_path })
+              Snacks.picker.files({ cwd = config_path })
             end
           },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
@@ -104,8 +105,13 @@ return {
         { section = "header" },
         {
           pane = 2,
-          section = "terminal",
-          cmd = "Show-Colorscript square",
+          text = [[
+
+ ▀ █ █ ▀   ▀ █ █ ▀   ▀ █ █ ▀   ▀ █ █ ▀   ▀ █ █ ▀   ▀ █ █ ▀
+ ██   ██   ██   ██   ██   ██   ██   ██   ██   ██   ██   ██
+ ▄ █ █ ▄   ▄ █ █ ▄   ▄ █ █ ▄   ▄ █ █ ▄   ▄ █ █ ▄   ▄ █ █ ▄
+
+          ]],
           height = 5,
           padding = 1,
         },
@@ -141,23 +147,48 @@ return {
     },
   },
   keys = {
-    { "<leader>un",  function() Snacks.notifier.hide() end,           desc = "Dismiss All Notifications" },
-    { "<leader>bd",  function() Snacks.bufdelete() end,               desc = "Delete buffer" },
-    { "<leader>bda", function() Snacks.bufdelete.all() end,           desc = "Delete all buffer" },
-    { "<leader>bdh", function() Snacks.bufdelete.other() end,         desc = "Delete other buffer" },
-    { "<leader>gg",  function() Snacks.lazygit() end,                 desc = "Lazygit" },
-    { "<leader>gb",  function() Snacks.git.blame_line() end,          desc = "Git Blame Line" },
-    { "<leader>gB",  function() Snacks.gitbrowse() end,               desc = "Git Browse" },
-    { "<leader>gf",  function() Snacks.lazygit.log_file() end,        desc = "Lazygit Current File History" },
-    { "<leader>gl",  function() Snacks.lazygit.log() end,             desc = "Lazygit Log (cwd)" },
-    { "<leader>x",   function() Snacks.terminal() end,                desc = "Toggle Terminal" },
-    { "<leader>ld",  function() Snacks.terminal("lazydocker") end,    desc = "Toggle Terminal" },
-    { "<leader>tt",  function() Snacks.terminal.toggle() end,         desc = "Toggle Terminal" },
-    { "]]",          function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference" },
-    { "[[",          function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference" },
-    { "<leader>.",   function() Snacks.scratch() end,                 desc = "Toggle Scratch Buffer" },
-    { "<leader>S",   function() Snacks.scratch.select() end,          desc = "Select Scratch Buffer" },
-    { "<F8>",        function() Snacks.zen() end,                     desc = "ZEN" },
+    { "<leader>un",   function() Snacks.notifier.hide() end,                                          desc = "Dismiss All Notifications" },
+    { "<leader>bd",   function() Snacks.bufdelete() end,                                              desc = "Delete buffer" },
+    { "<leader>bda",  function() Snacks.bufdelete.all() end,                                          desc = "Delete all buffer" },
+    { "<leader>bdh",  function() Snacks.bufdelete.other() end,                                        desc = "Delete other buffer" },
+    { "<leader>gg",   function() Snacks.lazygit() end,                                                desc = "Lazygit" },
+    { "<leader>gb",   function() Snacks.git.blame_line() end,                                         desc = "Git Blame Line" },
+    { "<leader>gB",   function() Snacks.gitbrowse() end,                                              desc = "Git Browse" },
+    { "<leader>gf",   function() Snacks.lazygit.log_file() end,                                       desc = "Lazygit Current File History" },
+    { "<leader>gl",   function() Snacks.lazygit.log() end,                                            desc = "Lazygit Log (cwd)" },
+    { "<leader>x",    function() Snacks.terminal() end,                                               desc = "Toggle Terminal" },
+    { "<leader>ld",   function() Snacks.terminal("lazydocker") end,                                   desc = "Toggle Terminal" },
+    { "<leader>ob",   function() Snacks.terminal("overmind connect backend") end,                     desc = "Toggle Terminal" },
+    { "<leader>gpr",  function() Snacks.terminal("gh pr list && echo 'Press enter...'; read") end,    desc = "PR list" },
+    { "<leader>gprc", function() Snacks.terminal("gh pr create") end,                                 desc = "PR Create" },
+    { "<leader>gprm", function() Snacks.terminal("gh pr ready ; gh pr merge") end,                    desc = "PR merge" },
+    { "<leader>gi",   function() Snacks.terminal("gh issue list && echo 'Press enter...'; read") end, desc = "Issue list" },
+    { "<leader>gio",  function() Snacks.terminal("gh issue create") end,                              desc = "Issue create" },
+    { "<leader>gic", function()
+      local issue_number = vim.fn.input('Issue Number -> ')
+      Snacks.terminal("gh issue close " .. issue_number)
+    end, },
+    { "]]",         function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference" },
+    { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference" },
+    { "<leader>.",  function() Snacks.scratch.open() end,            desc = "Toggle Scratch Buffer" },
+    { "<leader>S",  function() Snacks.scratch.select() end,          desc = "Select Scratch Buffer" },
+    { "<F8>",       function() Snacks.zen() end,                     desc = "ZEN" },
+    -- PICKER
+    { "<C-n>",      function() Snacks.picker.colorschemes() end,     desc = "Colorscheme" },
+    { "<leader>b",  function() Snacks.picker.buffers() end,          desc = "Buffers" },
+    { "<leader>fg", function() Snacks.picker.grep() end,             desc = "Grep" },
+    { "<leader>ff", function() Snacks.picker.files() end,            desc = "Find Files" },
+    { "<leader>fp", function() Snacks.picker.git_files() end,        desc = "Find Git Files" },
+    { "<leader>gs", function() Snacks.picker.git_status() end,       desc = "Git Status" },
+    { "<leader>ll", function() Snacks.picker.lines() end,            desc = "Buffer Lines" },
+    { "<leader>rb", function() Snacks.picker.grep_buffers() end,     desc = "Grep Open Buffers" },
+    { "<leader>#",  function() Snacks.picker.grep_word() end,        desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>y",  function() Snacks.picker.registers() end,        desc = "Registers" },
+    { "<leader>sj", function() Snacks.picker.jumps() end,            desc = "Jumps" },
+    { "<leader>m",  function() Snacks.picker.marks() end,            desc = "Marks" },
+    { "<leader>p",  function() Snacks.picker.projects() end,         desc = "Projects" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end,      desc = "LSP Symbols" },
+    { "<leader>z",  function() Snacks.picker.zoxide() end,           desc = "Zoxide" },
     {
       "<leader>n",
       function()

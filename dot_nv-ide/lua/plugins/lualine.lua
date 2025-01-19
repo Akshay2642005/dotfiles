@@ -46,11 +46,8 @@ return {
         globalstatus = true,
         component_separators = "",
         section_separators = "",
-        disabled_filetypes = { "Lazy", "NvimTree" },
+        disabled_filetypes = { "Lazy", "NvimTree", "toggleterm", "edgy" },
         theme = {
-          -- We are going to use lualine_c an lualine_x as left and
-          -- right section. Both are highlighted by c theme .  So we
-          -- are just setting default looks o statusline
           normal = {
             c = {
               fg = colors.fg,
@@ -85,6 +82,9 @@ return {
         lualine_x = {}
       },
       tabline = {},
+      winbar = {},
+
+      extensions = {}
     }
 
     -- Inserts a component in lualine_c at left section
@@ -140,23 +140,18 @@ return {
         gui = "bold"
       }
     }
-
     ins_left {
-      "branch",
-      icon = " ",
+      'branch',
+      icon = '󰘬',
       color = {
-        gui = "bold"
+        bg = '#181616',
+        fg = colors.yellow,
       }
     }
-
     ins_left {
       "diff",
       -- Is it me or the symbol for modified us really weird
-      symbols = {
-        added = " ",
-        modified = " ",
-        removed = " "
-      },
+      symbols = { added = " ", modified = "柳", removed = " " },
       diff_color = {
         added = {
         },
@@ -168,8 +163,6 @@ return {
       cond = conditions.hide_in_width
     }
 
-    -- Insert mid section. You can make any number of sections in neovim :)
-    -- for lualine it"s any number greater then 2
     ins_left { function()
       return "%="
     end }
@@ -222,32 +215,6 @@ return {
       },
       always_visible = true
     }
-
-    --[[     ins_right {
-      "fileformat",
-      fmt = string.upper,
-      icons_enabled = true,
-      color = {
-        fg = colors.green,
-        gui = "bold"
-      }
-    }
-    ins_right {
-      "location",
-      color = {
-        fg = colors.fg,
-        gui = "bold"
-      }
-    }
-
-    ins_right {
-      "progress",
-      color = {
-        fg = colors.fg,
-        gui = "bold"
-      }
-    } ]]
-
     -- Now don"t forget to initialize lualine
     lualine.setup(config)
   end
