@@ -1,0 +1,159 @@
+{
+  "editor.fontFamily": "JetBrainsMono Nerd Font",
+  "editor.fontSize": 16,
+  "workbench.colorTheme": "Kanagawa Dragon",
+  "workbench.iconTheme": "gruvbox-material-icon-theme",
+  "editor.minimap.enabled": false,
+  "workbench.tips.enabled": false,
+  "workbench.startupEditor": "none",
+  "breadcrumbs.enabled": false,
+  "workbench.editor.enablePreview": false,
+  "window.title": " ",
+  "catppuccin.accentColor": "sapphire",
+  "workbench.editor.editorActionsLocation": "hidden",
+  "workbench.editor.showTabs": "multiple",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.minimap.renderCharacters": false,
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  "window.restoreWindows": "none",
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.useCtrlKeys": true,
+  "editor.cursorSurroundingLines": 10,
+  "vim.smartRelativeLine": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.color": "rgba(250, 189, 47, 0.5)",
+  "vim.highlightedyank.textColor": "#202020",
+  "vim.highlightedyank.duration": 150,
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.runInTerminal": true,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "explorer.confirmDragAndDrop": false,
+  "editor.codeLensFontFamily": "JetBrainsMono Nerd Font",
+  "editor.linkedEditing": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "git.ignoreMissingGitWarning": true,
+  "git.openRepositoryInParentFolders": "never",
+  "json.schemas": [],
+  "editor.fontLigatures": false,
+  "explorer.decorations.colors": false,
+  "explorer.compactFolders": false,
+  "workbench.statusBar.visible": true,
+  "catppuccin.bracketMode": "neovim",
+  "catppuccin.workbenchMode": "flat",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "workbench.list.smoothScrolling": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "workbench.editor.empty.hint": "hidden",
+  "security.allowedUNCHosts": [
+    "wsl.localhost",
+    "wsl$"
+  ],
+  "vim.statusBarColorControl": false,
+  "vim.statusBarColors.normal": [
+    "#171819",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.insert": [
+    "#2C2E07",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.visual": [
+    "#35151D",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.visualline": [
+    "#35151D",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.visualblock": [
+    "#35151D",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.commandlineinprogress": [
+    "#2C2206",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.searchinprogressmode": [
+    "#171819",
+    "#ffffff"
+  ],
+  "vim.statusBarColors.surroundinputmode": [
+    "#171819",
+    "#ffffff"
+  ],
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "terminal.integrated.tabs.enabled": false,
+  "makefile.configureOnOpen": true,
+  "testing.gutterEnabled": false,
+  "breadcrumbs.showFunctions": false,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "window.confirmSaveUntitledWorkspace": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  "window.density.editorTabHeight": "compact",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.donotShowInfoMsg": true,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.confirmDelete": false,
+  "editor.tabSize": 2,
+  "update.enableWindowsBackgroundUpdates": false,
+  "window.menuBarVisibility": "hidden",
+  "workbench.activityBar.location": "hidden",
+  "lldb.suppressUpdateNotifications": true,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.selectionHighlight": false,
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "window.customTitleBarVisibility": "never",
+  "window.titleBarStyle": "native",
+  "custom-ui-style.font.sansSerif": "JetBrainsMono Nerd Font",
+  "custom-ui-style.font.monospace": "JetBrainsMono Nerd Font",
+  "custom-ui-style.electron": {
+    "frame": false,
+    "roundedCorners": false
+  },
+  "custom-ui-style.stylesheet": {
+    ".monaco-workbench": {
+      "&:not(.fullscreen)": {
+        ".activitybar, .statusbar, .tabs-container, .sidebar .composite.title": {
+          "-webkit-app-region": "drag",
+          ".content .monaco-action-bar, .statusbar-item, .tab, .title .title-actions .action-label": {
+            "-webkit-app-region": "no-drag"
+          }
+        }
+      }
+    }
+  },
+  "update.mode": "none",
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path-windows": "C:\\Users\\M S I\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe"
+  },
+  "github.copilot.chat.generateTests.codeLens": true
+}
