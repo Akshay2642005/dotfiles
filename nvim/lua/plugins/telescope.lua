@@ -41,8 +41,10 @@ return {
 			require("telescope").load_extension("fzf")
       require('telescope').load_extension('toggletasks')
 			require("telescope").load_extension("zoxide")
+      require("telescope").load_extension('chezmoi')
+      vim.keymap.set('n', '<leader>cz', require("telescope").extensions.chezmoi.find_files, {})
 			-- telescope setup
-			local builtin = require("telescope.builtin")
+			-- local builtin = require("telescope.builtin")
 
 			-- vim.keymap.set(
 			-- 	"n",

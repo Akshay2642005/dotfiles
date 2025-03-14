@@ -9,13 +9,12 @@ vim.cmd("set termguicolors")
 vim.cmd("set shellcmdflag=-c")
 vim.cmd("set shellquote=")
 vim.cmd("set shellxquote=")
---vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
 vim.cmd("set background=dark")
 --opts
 vim.opt.autoindent = true
 vim.opt.showcmd = true
 vim.opt.smartindent = true
-vim.opt.shell = "pwsh"
+vim.opt.shell = "pwsh -NoLogo"
 vim.opt.fillchars = { eob = " " }
 vim.o.signcolumn = "yes"
 vim.o.completeopt = "menuone,noselect,preview"

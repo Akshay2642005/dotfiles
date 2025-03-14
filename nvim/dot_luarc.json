@@ -1,6 +1,7 @@
 {
     "diagnostics.disable": [
         "missing-fields",
-        "undefined-doc-name"
+        "undefined-doc-name",
+        "redundant-value"
     ]
 }
