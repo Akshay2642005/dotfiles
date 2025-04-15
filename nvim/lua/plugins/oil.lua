@@ -1,6 +1,7 @@
 return {
 	"stevearc/oil.nvim",
 	opts = {},
+  lazy=true,
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	config = function()
 		require("oil").setup({

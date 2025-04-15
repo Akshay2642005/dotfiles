@@ -8,5 +8,6 @@ return{
     },
     -- To enable YAML config support
     rocks = 'lyaml',
+    lazy = true,
   }
 }

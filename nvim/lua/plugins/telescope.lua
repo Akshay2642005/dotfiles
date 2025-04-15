@@ -3,6 +3,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.8",
+    lazy = true,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -38,11 +39,10 @@ return {
 				},
 			})
 
-			require("telescope").load_extension("fzf")
       require('telescope').load_extension('toggletasks')
 			require("telescope").load_extension("zoxide")
       require("telescope").load_extension('chezmoi')
-      vim.keymap.set('n', '<leader>cz', require("telescope").extensions.chezmoi.find_files, {})
+      vim.keymap.set('n', '<leader>cz', require("telescope").extensions.chezmoi.find_files, {desc = "chezmoi files"})
 			-- telescope setup
 			-- local builtin = require("telescope.builtin")
 

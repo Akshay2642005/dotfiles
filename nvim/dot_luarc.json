@@ -2,6 +2,11 @@
     "diagnostics.disable": [
         "missing-fields",
         "undefined-doc-name",
-        "redundant-value"
+        "redundant-value",
+        "undefined-field",
+        "deprecated"
+    ],
+    "diagnostics.globals": [
+        "opts"
     ]
 }

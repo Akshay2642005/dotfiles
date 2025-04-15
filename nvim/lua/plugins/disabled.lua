@@ -6,5 +6,5 @@ return{
   {
     'saecki/crates.nvim',
     enabled = false,
-}
+  }
 }

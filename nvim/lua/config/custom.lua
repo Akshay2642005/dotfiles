@@ -9,6 +9,17 @@ require("lspconfig").vtsls.setup({
   }
 })
 
+require("lspconfig").zls.setup({
+  settings = {
+    zls = {
+      cmd = { "zls" },
+      checkOnSave = {
+        enable = false
+      }
+    }
+  }
+})
+
 vim.g.rustaceanvim = {
   server = {
     settings = {
@@ -72,7 +83,7 @@ require("dapui").setup(
         elements = { {
             id = "scopes",
             size = 0.25
-          }, 
+          },
           {
             id = "breakpoints",
             size = 0.25
@@ -110,5 +121,11 @@ require("dapui").setup(
     }
   }
 )
+
+
+
+
+
+
 
 

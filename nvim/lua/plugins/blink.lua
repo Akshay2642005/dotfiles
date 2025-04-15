@@ -6,6 +6,7 @@ return {
     "sources.completion.enabled_providers",
     "sources.compat",
     "sources.default",
+    "sources.cmdline"
   },
   dependencies = {
     "rafamadriz/friendly-snippets",

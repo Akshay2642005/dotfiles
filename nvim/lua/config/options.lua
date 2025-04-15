@@ -10,6 +10,7 @@ vim.cmd("set shellcmdflag=-c")
 vim.cmd("set shellquote=")
 vim.cmd("set shellxquote=")
 vim.cmd("set background=dark")
+vim.cmd("set norelativenumber")
 --opts
 vim.opt.autoindent = true
 vim.opt.showcmd = true
@@ -22,6 +23,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.bo.softtabstop = 2
+
+
 
 
 

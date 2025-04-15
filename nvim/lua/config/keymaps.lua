@@ -15,7 +15,6 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
-vim.keymap.set("n", "<A-d>", vim.diagnostic.open_float, { desc = "Diagnostics" })
 vim.keymap.set("n", "te", "<CMD>tabedit<Return>")
 vim.keymap.set("n", "<tab>", "<CMD>tabnext<Return>")
 vim.keymap.set("n", "<s-tab>", "<CMD>tabprev<Return>")
@@ -26,13 +25,16 @@ vim.keymap.set("n", "sl", "<C-w>l")
 vim.keymap.set("n", "<C-w><left>", "<C-w><")
 vim.keymap.set("n", "<C-w><right>", "<C-w>>")
 vim.keymap.set("n", "<C-w><up>", "<C-w>+")
-vim.keymap.set("n", "<C-n>", ":Telescope colorscheme<CR>")
+vim.keymap.set("n", "<C-n>", "<CMD>Telescope colorscheme<CR>")
 vim.keymap.set("n", "<C-w><down>", "<C-w>-")
 vim.keymap.set("n", "[e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<C-w>f", "<CMD>Telescope flutter commands<CR>", { desc = "flutter commands" })
-vim.keymap.set("n", "<A-i>", "<CMD>ToggleTerm<CR>")
 vim.keymap.set("n","<leader>e",'<CMD>lua require("oil").toggle_float()<CR>')
+vim.keymap.set("n", "<A-/>",      function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+
+-- Terminal Mappings
+vim.keymap.set("t", "<A-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 vim.keymap.set(
   "n",
   "<F4>",
@@ -88,11 +90,8 @@ vim.keymap.set("n", "<leader>sr", function()
   vim.cmd(string.format("%%s/%s/%s/%s", vim.fn.escape(search, "/"), vim.fn.escape(replace, "/"), flags))
 end, { desc = "Dynamic search and replace" })
 
-vim.api.nvim_create_autocmd({ "Filetype" }, {
-  pattern = "harpoon",
-  callback = function()
-    vim.opt.cursorline = true
-    vim.api.nvim_set_hl(0, "HarpoonWindow", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "HarpoonBorder", { link = "Normal" })
-  end,
-})
+
+
+
+
+
