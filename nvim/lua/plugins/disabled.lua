@@ -1,10 +1,14 @@
-return{
+return {
   {
-  "nvim-neo-tree/neo-tree.nvim",
-  enabled = false,
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
   },
   {
-    'saecki/crates.nvim',
+    "saecki/crates.nvim",
     enabled = false,
-  }
+  },
+  {
+    "ibhagwan/fzf-lua",
+    enabled = false,
+  },
 }

@@ -30,11 +30,10 @@ vim.keymap.set("n", "<C-w><down>", "<C-w>-")
 vim.keymap.set("n", "[e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<C-w>f", "<CMD>Telescope flutter commands<CR>", { desc = "flutter commands" })
-vim.keymap.set("n","<leader>e",'<CMD>lua require("oil").toggle_float()<CR>')
-vim.keymap.set("n", "<A-/>",      function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-
+vim.keymap.set("n", "<leader>e", '<CMD>lua require("oil").toggle_float()<CR>')
+vim.keymap.set("n", "<A-i>", "<CMD>ToggleTerm<CR>")
+vim.keymap.set({ "n", "v" }, "<A-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 -- Terminal Mappings
-vim.keymap.set("t", "<A-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 vim.keymap.set(
   "n",
   "<F4>",
@@ -53,24 +52,22 @@ vim.keymap.set(
   "<CMD>Telescope toggletasks select<CR>",
   { noremap = true, silent = true, nowait = true, desc = "Make Select" }
 )
+vim.keymap.set(
+  "n",
+  "<F5>",
+  "<CMD>TodoTelescope<CR>",
+  { noremap = true, silent = true, nowait = true, desc = "TodoList" }
+)
 vim.diagnostic.config({
   virtual_text = false,
 })
 
-function Leave_snippet()
-  if
-    ((vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n") or vim.v.event.old_mode == "i")
-    and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-    and not require("luasnip").session.jump_active
-  then
-    require("luasnip").unlink_current()
-  end
-end
-
--- stop snippets when you leave to normal mode
-vim.api.nvim_command([[
-    autocmd ModeChanged * lua Leave_snippet()
-]])
+vim.keymap.set(
+  "n",
+  "<F9>",
+  '<cmd>lua require("kubectl").toggle({ tab = true })<cr>',
+  { noremap = true, silent = true }
+)
 
 --search and replace
 vim.keymap.set("n", "<leader>sr", function()
@@ -89,9 +86,3 @@ vim.keymap.set("n", "<leader>sr", function()
   -- Perform the substitution
   vim.cmd(string.format("%%s/%s/%s/%s", vim.fn.escape(search, "/"), vim.fn.escape(replace, "/"), flags))
 end, { desc = "Dynamic search and replace" })
-
-
-
-
-
-

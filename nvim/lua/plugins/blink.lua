@@ -1,3 +1,5 @@
+local codecompanian = require("plugins.codecompanian")
+
 return {
   "saghen/blink.cmp",
   version = not vim.g.lazyvim_blink_main and "*",
@@ -6,20 +8,17 @@ return {
     "sources.completion.enabled_providers",
     "sources.compat",
     "sources.default",
-    "sources.cmdline"
   },
   dependencies = {
     "rafamadriz/friendly-snippets",
-    -- add blink.compat to dependencies
     {
       "saghen/blink.compat",
-      optional = true, -- make optional so it's only enabled if any extras need it
+      optional = true,
       opts = {},
       version = not vim.g.lazyvim_blink_main and "*",
     },
   },
   event = "InsertEnter",
-
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
@@ -29,17 +28,11 @@ return {
       end,
     },
     appearance = {
-      -- sets the fallback highlight groups to nvim-cmp's highlight groups
-      -- useful for when your theme doesn't support blink.cmp
-      -- will be removed in a future release, assuming themes add support
       use_nvim_cmp_as_default = false,
-      -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
     },
     completion = {
       accept = {
-        -- experimental auto-brackets support
         auto_brackets = {
           enabled = true,
         },
@@ -48,7 +41,10 @@ return {
         border = "single",
         draw = {
           treesitter = { "lsp" },
-          columns = { { "label", "label_description", gap = 1 }, { "kind_icon",gap=1, "kind" } },
+          columns = {
+            { "label",     "label_description", gap = 1 },
+            { "kind_icon", gap = 1,             "kind" },
+          },
         },
       },
       documentation = {
@@ -56,28 +52,18 @@ return {
         auto_show_delay_ms = 200,
       },
       ghost_text = {
-        enabled = true
-        -- enabled = vim.g.ai_cmp,
+        enabled = true,
       },
     },
-
-    -- experimental signature help support
-    -- signature = { enabled = true },
-
     sources = {
-      -- adding any nvim-cmp sources here will enable them
-      -- with blink.compat
       compat = {},
       default = { "lsp", "path", "snippets", "buffer" },
+      per_filetype = {
+        codecompanion = { "codecompanion" },
+      },
     },
-
-     -- cmdline = {
-     --   enabled = true,
-     -- },
-     --
     keymap = {
-      preset = "super-tab",
-      ["<C-y>"] = { "select_and_accept" },
+      preset = "super-tab"
     },
   },
   ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
@@ -97,13 +83,22 @@ return {
 
     -- add ai_accept to <Tab> key
     if not opts.keymap["<Tab>"] then
-      if opts.keymap.preset == "super-tab" then -- super-tab
-        opts.keymap["<Tab>"] = {
-          require("blink.cmp.keymap.presets")["super-tab"]["<Tab>"][1],
-          LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
-          "fallback",
-        }
-      else -- other presets
+      if opts.keymap.preset == "super-tab" then
+        local ok, preset = pcall(require("blink.cmp.keymap.presets").get, "super-tab")
+        if ok and preset and preset["<Tab>"] and preset["<Tab>"][1] then
+          opts.keymap["<Tab>"] = {
+            preset["<Tab>"][1],
+            LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+            "fallback",
+          }
+        else
+          vim.notify("[blink.cmp] preset 'super-tab' not found or invalid", vim.log.levels.WARN)
+          opts.keymap["<Tab>"] = {
+            LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+            "fallback",
+          }
+        end
+      else
         opts.keymap["<Tab>"] = {
           LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
           "fallback",

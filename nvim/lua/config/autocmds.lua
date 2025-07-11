@@ -7,7 +7,6 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
   end,
 })
 
-
 -- Remove italics from specific highlight groups
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
@@ -22,3 +21,25 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
+local function augroup(name)
+  return vim.api.nvim_create_augroup(name, { clear = true })
+end
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  group = augroup("jenkinsfile_detect"),
+  pattern = { "Jenkinsfile" },
+  callback = function()
+    vim.cmd("set filetype=groovy")
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "Comment", {
+      bold = false,
+      ctermfg = "DarkGrey",
+      ctermbg = "NONE",
+    })
+  end,
+})

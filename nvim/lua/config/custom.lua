@@ -1,131 +1,43 @@
+--Local Mason Bin PATH
+local mason_bin = vim.fn.stdpath("data") .. "\\mason\\bin\\"
+
+local fmt_paths = {
+  stylua = mason_bin .. "stylua.CMD",
+  shfmt = mason_bin .. "shfmt.CMD",
+  gofumpt = mason_bin .. "gofumpt.CMD",
+  goimports = mason_bin .. "goimports.CMD",
+  ["php-cs-fixer"] = mason_bin .. "php-cs-fixer.CMD",
+  ["clang-format"] = mason_bin .. "clang-format.CMD",
+  prettier = mason_bin .. "prettier.CMD",
+  ktlint = mason_bin .. "ktlint.CMD",
+  ruff = mason_bin .. "ruff.CMD",
+  buf = mason_bin .. "buf.CMD",
+  ["ast-grep"] = mason_bin .. "ast-grep.CMD",
+  asmfmt = mason_bin .. "asmfmt.CMD",
+  rubocop = mason_bin .. "rubocop.CMD",
+}
+
+local formatter_config = {}
+for name, path in pairs(fmt_paths) do
+  formatter_config[name] = {
+    command = string.format('"%s"', path),
+  }
+end
+
+require("conform").setup({
+  formatters = formatter_config,
+})
+
+
 --lsp
-require("lspconfig").vtsls.setup({
+
+local lspconfig = require("lspconfig")
+lspconfig.vtsls.setup({
   settings = {
     vtsls = {
       diagnostics = {
-        ignoredCodes = { 80001 } -- Replace with actual warning code
-      }
-    }
-  }
-})
-
-require("lspconfig").zls.setup({
-  settings = {
-    zls = {
-      cmd = { "zls" },
-      checkOnSave = {
-        enable = false
-      }
-    }
-  }
-})
-
-vim.g.rustaceanvim = {
-  server = {
-    settings = {
-      ["rust-analyzer"] = {
-         diagnostics = {
-          disabled = {
-           "macro-error"
-          },
-        },
-        cargo = {
-          buildScripts = { enable = true },
-        },
-        procMacro = {
-          enable = true,
-          ignored = {
-            ["async-trait"] = { "async_trait" },
-            ["napi-derive"] = { "napi" },
-            ["async-recursion"] = { "async_recursion" },
-          },
-        },
+        ignoredCodes = { 80001 }, -- Replace with actual warning code
       },
     },
   },
-},
-
-
---dap-ui
-require("dapui").setup(
-    {
-    controls = {
-      element = "repl",
-      enabled = true,
-      icons = {
-        disconnect = "",
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_into = "",
-        step_out = "",
-        step_over = "",
-        terminate = ""
-      }
-    },
-    element_mappings = {},
-    expand_lines = true,
-    floating = {
-      border = "single",
-      mappings = {
-        close = { "q", "<Esc>" }
-      }
-    },
-    force_buffers = true,
-    icons = {
-      collapsed = "",
-      current_frame = "",
-      expanded = ""
-    },
-    layouts = {
-      {
-        elements = { {
-            id = "scopes",
-            size = 0.25
-          },
-          {
-            id = "breakpoints",
-            size = 0.25
-          }, {
-            id = "stacks",
-            size = 0.25
-          }, {
-            id = "watches",
-            size = 0.25
-          } },
-        position = "right",
-        size = 35
-      }, {
-        elements = { {
-            id = "repl",
-            size = 0.5
-          }, {
-            id = "console",
-            size = 0.5
-          } },
-        position = "bottom",
-        size = 5
-      } },
-    mappings = {
-      edit = "e",
-      expand = { "<CR>", "<2-LeftMouse>" },
-      open = "o",
-      remove = "d",
-      repl = "r",
-      toggle = "t"
-    },
-    render = {
-      indent = 1,
-      max_value_lines = 100
-    }
-  }
-)
-
-
-
-
-
-
-
-
+})
