@@ -1,0 +1,10 @@
+{
+    "diagnostics.disable": [
+        "missing-fields",
+        "undefined-doc-name",
+        "redundant-value",
+        "undefined-field",
+        "deprecated",
+        "unused-local"
+    ]
+}
