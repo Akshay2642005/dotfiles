@@ -29,60 +29,44 @@ vim.keymap.set("n", "<C-n>", "<CMD>Telescope colorscheme<CR>")
 vim.keymap.set("n", "<C-w><down>", "<C-w>-")
 vim.keymap.set("n", "[e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<C-w>f", "<CMD>Telescope flutter commands<CR>", { desc = "flutter commands" })
 vim.keymap.set("n", "<leader>e", '<CMD>lua require("oil").toggle_float()<CR>')
-vim.keymap.set("n", "<A-i>", "<CMD>ToggleTerm<CR>")
 vim.keymap.set({ "n", "v" }, "<A-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 -- Terminal Mappings
-vim.keymap.set(
-  "n",
-  "<F4>",
-  "<CMD>Telescope toggletasks edit<CR>",
-  { noremap = true, silent = true, nowait = true, desc = "Task edit" }
-)
-vim.keymap.set(
-  "n",
-  "<F3>",
-  "<CMD>Telescope toggletasks spawn<CR>",
-  { noremap = true, silent = true, nowait = true, desc = "Task Spwan" }
-)
-vim.keymap.set(
-  "n",
-  "<F2>",
-  "<CMD>Telescope toggletasks select<CR>",
-  { noremap = true, silent = true, nowait = true, desc = "Make Select" }
-)
 vim.keymap.set(
   "n",
   "<F5>",
   "<CMD>TodoTelescope<CR>",
   { noremap = true, silent = true, nowait = true, desc = "TodoList" }
 )
+
+-- Show all diagnostics in a floating list (like :lua vim.diagnostic.setqflist())
 vim.diagnostic.config({
   virtual_text = false,
 })
+vim.keymap.set("n", "<C-w>D", function()
+  vim.diagnostic.setqflist()
+end, { desc = "Show All Diagnostics (Quickfix List)" })
 
-vim.keymap.set(
-  "n",
-  "<F9>",
-  '<cmd>lua require("kubectl").toggle({ tab = true })<cr>',
-  { noremap = true, silent = true }
-)
+vim.keymap.set("n", "<C-w>t", "<CMD>TodoQuickFix<CR>", { desc = "Todo List (Quickfix)" })
+
+-- OR use Trouble if you have it installed
+-- vim.keymap.set("n", "<leader>ld", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Show All Diagnostics" })
+
 
 --search and replace
-vim.keymap.set("n", "<leader>sr", function()
-  -- Prompt the user for the search pattern
-  local search = vim.fn.input("Search: ")
-  if search == "" then
-    return
-  end -- Exit if no input
+vim.keymap.set("n", "<leader>sr", Search_Replace, { desc = "Dynamic search and replace" })
 
-  -- Prompt the user for the replace pattern
-  local replace = vim.fn.input("Replace: ")
+-- pane mappings
+vim.keymap.set("n", "<C-w><Up>", "<C-w>k", { desc = "Move to upper window" })
+vim.keymap.set("n", "<C-w><Down>", "<C-w>j", { desc = "Move to lower window" })
+vim.keymap.set("n", "<C-w><Left>", "<C-w>h", { desc = "Move to left window" })
+vim.keymap.set("n", "<C-w><Right>", "<C-w>l", { desc = "Move to right window" })
 
-  -- Prompt the user for flags (e.g., 'g', 'gc', etc.)
-  local flags = vim.fn.input("Flags (e.g., g, gc): ")
 
-  -- Perform the substitution
-  vim.cmd(string.format("%%s/%s/%s/%s", vim.fn.escape(search, "/"), vim.fn.escape(replace, "/"), flags))
-end, { desc = "Dynamic search and replace" })
+-- Telescope project
+vim.api.nvim_set_keymap(
+  'n',
+  '<C-p>',
+  ":lua require'telescope'.extensions.projects.projects{}<CR>",
+  { noremap = true, silent = true }
+)

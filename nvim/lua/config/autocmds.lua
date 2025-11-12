@@ -43,3 +43,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
     })
   end,
 })
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    vim.opt.shadafile = "NONE"
+  end,
+})

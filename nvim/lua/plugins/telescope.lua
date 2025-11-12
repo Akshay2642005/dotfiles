@@ -2,7 +2,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    branch = "master",
     lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -41,8 +41,8 @@ return {
 
       -- require("telescope").load_extension("toggletasks")
       require("telescope").load_extension("zoxide")
-      require("telescope").load_extension("chezmoi")
-      vim.keymap.set("n", "<leader>cz", require("telescope").extensions.chezmoi.find_files, { desc = "chezmoi files" })
+      -- require("telescope").load_extension("chezmoi")
+      -- vim.keymap.set("n", "<leader>cz", require("telescope").extensions.chezmoi.find_files, { desc = "chezmoi files" })
       -- telescope setup
       -- local builtin = require("telescope.builtin")
 
@@ -82,4 +82,15 @@ return {
       require("telescope").load_extension("ui-select")
     end,
   },
+  {
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+      require('telescope').load_extension('projects')
+    end,
+  }
 }

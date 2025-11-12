@@ -22,6 +22,9 @@ return {
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
+    cmdline = {
+      enabled = false,
+    },
     snippets = {
       expand = function(snippet, _)
         return LazyVim.cmp.expand(snippet)
