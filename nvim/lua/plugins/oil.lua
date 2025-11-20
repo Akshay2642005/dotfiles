@@ -135,6 +135,9 @@ return {
           winblend = 0,
         },
       },
+      preview = {
+        enabled = true
+      },
       ssh = {
         border = "rounded",
       },

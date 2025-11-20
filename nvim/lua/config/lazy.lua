@@ -41,3 +41,5 @@ require("lazy").setup({
     },
   },
 })
+
+require("mcphub").setup()

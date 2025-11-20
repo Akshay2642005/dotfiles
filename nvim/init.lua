@@ -3,6 +3,13 @@ require("config.custom")
 vim.api.nvim_set_hl(0, "SnacksTerminalTitle", { fg = "NONE", bg = "NONE" })
 vim.cmd("colorscheme base16-black-metal-gorgoroth")
 vim.cmd("TransparentEnable")
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = function()
+    local cwd = vim.fn.getcwd()
+    local osc7 = "\27]7;file://" .. cwd .. "\27\\"
+    io.write(osc7)
+  end,
+})
 if vim.g.neovide then
   -- vim.cmd("TransparentDisable")
   vim.cmd("colorscheme base16-black-metal-gorgoroth")

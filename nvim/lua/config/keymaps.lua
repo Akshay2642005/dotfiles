@@ -30,6 +30,8 @@ vim.keymap.set("n", "<C-w><down>", "<C-w>-")
 vim.keymap.set("n", "[e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>e", '<CMD>lua require("oil").toggle_float()<CR>')
+vim.keymap.set("n", "<leader>mh", '<CMD>MCPHub<CR>', { desc = "Toggle McpHub" })
+vim.keymap.set("n", "<C-w>l", '<CMD>lua Snacks.picker.lines()<CR>')
 vim.keymap.set({ "n", "v" }, "<A-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 -- Terminal Mappings
 vim.keymap.set(

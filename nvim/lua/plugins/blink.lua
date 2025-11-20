@@ -1,4 +1,4 @@
-local codecompanian = require("plugins.codecompanian")
+-- local codecompanian = require("plugins.codecompanian")
 
 return {
   "saghen/blink.cmp",
@@ -61,9 +61,9 @@ return {
     sources = {
       compat = {},
       default = { "lsp", "path", "snippets", "buffer" },
-      per_filetype = {
-        codecompanion = { "codecompanion" },
-      },
+      -- per_filetype = {
+      --   codecompanion = { "codecompanion" },
+      -- },
     },
     keymap = {
       preset = "super-tab"

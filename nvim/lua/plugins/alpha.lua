@@ -1,6 +1,6 @@
 return {
   "goolord/alpha-nvim",
-  enabled = false,
+  -- enabled = false,
   dependencies = {
     "nvim-mini/mini.icons",
   },

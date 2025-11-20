@@ -6,6 +6,7 @@ local fmt_paths = {
   shfmt = mason_bin .. "shfmt.CMD",
   gofumpt = mason_bin .. "gofumpt.CMD",
   goimports = mason_bin .. "goimports.CMD",
+  ["prettierd"] = mason_bin .. "prettierd.CMD",
   ["php-cs-fixer"] = mason_bin .. "php-cs-fixer.CMD",
   ["clang-format"] = mason_bin .. "clang-format.CMD",
   prettier = mason_bin .. "prettier.CMD",
@@ -24,7 +25,14 @@ for name, path in pairs(fmt_paths) do
   }
 end
 
+-- linter fix
+local lint = require("lint")
+local goci = lint.linters.golangcilint
+goci.ignore_exitcode = true
+
+
 require("conform").setup({
+  notify_on_error = false,
   formatters = formatter_config,
 })
 
@@ -56,6 +64,13 @@ lspconfig.vtsls.setup({
 
 
 -- Disable inlay hints by default
+local notify = vim.notify
+vim.notify = function(msg, level, opts)
+  if msg:match("Linter command `cmd%.exe` exited") then
+    return
+  end
+  notify(msg, level, opts)
+end
 
 
 
@@ -63,11 +78,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
+      vim.defer_fn(function()
+        vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
+      end, 200)
     end
   end,
 })
-
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
