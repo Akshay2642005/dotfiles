@@ -1,0 +1,453 @@
+{
+  "zoomed_padding": false,
+  "bottom_dock_layout": "full",
+  "cli_default_open_behavior": "existing_window",
+  "tab_size": 2,
+  "auto_indent": "syntax_aware",
+  "show_whitespaces": "selection",
+  "diff_view_style": "unified",
+  "language_models": {
+    "ollama": {
+      "api_url": "http://localhost:12434"
+    }
+  },
+  "ssh_connections": [
+    {
+      "host": "192.168.99.200",
+      "username": "vagrant",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/vagrant/network_lab/./"
+          ]
+        },
+        {
+          "paths": [
+            "/home/vagrant/socket_programming"
+          ]
+        }
+      ],
+      "nickname": "development-kubernetes"
+    }
+  ],
+  "which_key": {
+    "delay_ms": 50,
+    "enabled": false
+  },
+  "agent_servers": {
+    "Claude Agent": {
+      "type": "custom",
+      "command": "claude",
+      "args": [
+        "--model",
+        "gemma4"
+      ]
+    },
+    "claude-acp": {
+      "type": "custom",
+      "command": "ollama",
+      "args": [
+        "launch",
+        "claude"
+      ]
+    },
+    "opencode": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "gemini": {
+      "type": "registry"
+    },
+    "github-copilot-cli": {
+      "type": "registry"
+    },
+    "GLM": {
+      "type": "custom",
+      "command": "route-to/claude-code-acp",
+      "args": [],
+      "env": {
+        "ANTHROPIC_AUTH_TOKEN": "ollama",
+        "ANTHROPIC_BASE_URL": "http://localhost:11434",
+        "ANTHROPIC_MODEL": "minimax-m2:cloud",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+      }
+    }
+  },
+  "auto_signature_help": false,
+  "buffer_line_height": "standard",
+  "redact_private_values": true,
+  "use_system_prompts": true,
+  "disable_ai": false,
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "window_decorations": "server",
+  "audio": {
+    "experimental.auto_microphone_volume": true
+  },
+  "prettier": {
+    "allowed": false
+  },
+  "hard_tabs": false,
+  "edit_predictions": {
+    "provider": "zed",
+    "mode": "eager"
+  },
+  "minimum_contrast_for_highlights": 20.0,
+  "agent_buffer_font_size": 16.0,
+  "buffer_font_weight": 300.0,
+  "ui_font_weight": 400.0,
+  "diagnostics": {
+    "button": true,
+    "inline": {
+      "enabled": true,
+      "padding": 2
+    }
+  },
+  "soft_wrap": "editor_width",
+  "active_pane_modifiers": {
+    "border_size": 0.0,
+    "inactive_opacity": 1.0
+  },
+  "use_system_window_tabs": true,
+  "context_servers": {
+    "shadcn-mcp-server": {
+      "enabled": true,
+      "settings": {}
+    },
+    "github-activity-summarizer": {
+      "enabled": true,
+      "settings": {}
+    },
+    "terraform-context-server": {
+      "enabled": true,
+      "settings": {}
+    },
+    "postgres-context-server": {
+      "enabled": true,
+      "settings": {
+        "database_url": "postgresql://myuser:mypassword@localhost:5432/mydatabase"
+      }
+    },
+    "container-use-mcp": {
+      "enabled": true,
+      "settings": {}
+    },
+    "mcp-server-github": {
+      "enabled": true,
+      "settings": {}
+    }
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "base_keymap": null,
+  "debugger": {
+    "dock": "bottom",
+    "button": true
+  },
+  "outline_panel": {
+    "dock": "left",
+    "button": true,
+    "indent_guides": {
+      "show": "always"
+    },
+    "file_icons": true,
+    "folder_icons": true,
+    "auto_reveal_entries": true,
+    "git_status": true
+  },
+  "collaboration_panel": {
+    "dock": "right",
+    "button": true
+  },
+  "git_panel": {
+    "show_count_badge": true,
+    "file_icons": false,
+    "fallback_branch_name": "main",
+    "tree_view": true,
+    "dock": "left",
+    "status_style": "icon"
+  },
+  "agent_ui_font_size": 16.0,
+  "agent": {
+    "flexible": true,
+    "sidebar_side": "left",
+    "show_turn_stats": true,
+    "default_width": 10.0,
+    "tool_permissions": {
+      "default": "allow"
+    },
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-4.5"
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.5"
+      }
+    ],
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5.2-codex"
+    },
+    "notify_when_agent_waiting": "all_screens",
+    "profiles": {
+      "prometheus": {
+        "default_model": {
+          "provider": "copilot_chat",
+          "model": "gpt-4.1",
+          "enable_thinking": false
+        },
+        "name": "Prometheus",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      },
+      "assistant": {
+        "name": "assistant",
+        "tools": {
+          "diagnostics": true,
+          "delete_path": true,
+          "create_directory": true,
+          "copy_path": true
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
+    "dock": "right",
+    "play_sound_when_agent_done": "always",
+    "default_profile": "write",
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
+      "provider": "copilot_chat",
+      "model": "gpt-5.2-codex"
+    }
+  },
+  "lsp": {
+    "erlang-ls": {
+      "binary": {
+        "path": "C:\\Users\\M S I\\AppData\\Local\\Zed\\extensions\\work\\erlang\\erlang-ls-v1.1.0-otp-26.2.5.3\\erlang_ls.bat"
+      }
+    },
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "eslint": {
+            "enable": false
+          },
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        }
+      },
+      "enable_lsp_tasks": true
+    },
+    "jdtls": {
+      "initialization_options": {}
+    },
+    "rust-analyzer": {
+      "initialization_options": {
+        "cargo": {
+          "extraEnv": {
+            "CMAKE": "C:\\Program Files\\CMake\\bin\\cmake.exe"
+          }
+        }
+      },
+      "settings": {
+        "procMacros": {
+          "enable": true
+        },
+        "cargo": {
+          "allFeatures": true
+        },
+        "check": {
+          "enable": true,
+          "command": "clippy"
+        }
+      },
+      "enable_lsp_tasks": true
+    }
+  },
+  "remove_trailing_whitespace_on_save": true,
+  "lsp_document_colors": "inlay",
+  "inline_code_actions": true,
+  "minimap": {
+    "show": "never"
+  },
+  "search": {
+    "button": false,
+    "case_sensitive": true
+  },
+  "project_panel": {
+    "button": true,
+    "starts_open": false,
+    "sticky_scroll": true,
+    "auto_fold_dirs": false,
+    "git_status": true,
+    "diagnostic_badges": true,
+    "indent_guides": {
+      "show": "always"
+    },
+    "dock": "right"
+  },
+  "toolbar": {
+    "code_actions": true,
+    "breadcrumbs": false,
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false
+  },
+  "title_bar": {
+    "button_layout": "platform_default",
+    "show_branch_status_icon": true,
+    "show_menus": false,
+    "show_branch_name": true,
+    "show_onboarding_banner": true,
+    "show_sign_in": true,
+    "show_project_items": true,
+    "show_user_picture": true,
+    "show_user_menu": true
+  },
+  "ui_font_family": "GeistMono Nerd Font",
+  "buffer_font_family": "GeistMono Nerd Font Propo",
+  "hide_mouse": "on_typing_and_action",
+  "show_edit_predictions": true,
+  "inlay_hints": {
+    "enabled": false
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "Alabaster",
+    "dark": "Cold Theme"
+  },
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
+  "vim_mode": true,
+  "ui_font_size": 16.0,
+  "buffer_font_size": 16.0,
+  "cursor_blink": false,
+  "relative_line_numbers": "enabled",
+  "tab_bar": {
+    "show": true,
+    "show_tab_bar_buttons": false,
+    "show_nav_history_buttons": false,
+    "show_pinned_tabs_in_separate_row": false
+  },
+  "scrollbar": {
+    "show": "never"
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "fixed"
+  },
+  "tabs": {
+    "show_diagnostics": "all",
+    "file_icons": true,
+    "git_status": true
+  },
+  "preview_tabs": {
+    "enable_preview_from_project_panel": false,
+    "enable_preview_file_from_code_navigation": false,
+    "enable_preview_from_multibuffer": false,
+    "enable_preview_from_file_finder": false,
+    "enabled": false
+  },
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "status_bar": {
+    "active_language_button": false,
+    "cursor_position_button": false,
+    "active_encoding_button": "disabled",
+    "experimental.show": true,
+    "line_endings_button": false
+  },
+  "vim": {
+    "use_system_clipboard": "always"
+  },
+  "terminal": {
+    "flexible": true,
+    "dock": "bottom",
+    "button": true,
+    "shell": "system",
+    "scrollbar": null,
+    "toolbar": {
+      "breadcrumbs": false
+    },
+    "font_family": "JetBrainsMono Nerd Font Mono"
+  },
+  "show_wrap_guides": true,
+  "profiles": {
+    "Personal": {
+      "settings": {
+        "show_wrap_guides": false,
+        "show_edit_predictions": false,
+        "ui_font_size": 16,
+        "buffer_font_size": 16,
+        "preferred_line_length": 75,
+        "soft_wrap": "prefer_line",
+        "git": {
+          "git_gutter": "tracked_files",
+          "inline_blame": {
+            "enabled": false
+          }
+        }
+      }
+    }
+  },
+  "languages": {
+    "Rust": {
+      "document_folding_ranges": "on",
+      "document_symbols": "on",
+      "colorize_brackets": false,
+      "show_edit_predictions": true,
+      "tab_size": 4,
+      "indent_guides": {
+        "enabled": true
+      }
+    },
+    "C": {
+      "show_edit_predictions": true
+    },
+    "Prisma": {
+      "enable_language_server": false
+    },
+    "Proto": {
+      "enable_language_server": false
+    },
+    "TypeScript": {
+      "language_servers": [
+        "!eslint",
+        "..."
+      ]
+    },
+    "JavaScript": {
+      "language_servers": [
+        "!eslint",
+        "..."
+      ]
+    }
+  }
+}

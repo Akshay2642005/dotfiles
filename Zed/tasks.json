@@ -1,0 +1,27 @@
+// Project tasks configuration. See https://zed.dev/docs/tasks for documentation.
+//
+// Example:
+[
+  {
+    "label": "Run C++ (LeetCode)",
+    "command": "pwsh.exe",
+    "args": [
+      "-NoProfile",
+      "-Command",
+      "clang-cl /std:c++17 /O2 main.cpp /Fe:main.exe; Get-Content input.txt | .\\main.exe | Set-Content output.txt"
+    ],
+    "use_new_terminal": false,
+    "reveal": "never",
+  },
+  {
+    "label": "cargo watch",
+    "command": "pwsh.exe",
+    "args": [
+      "-NoProfile",
+      "-Command",
+      "$env:RUST_LOG='info' | cargo watch -q -c -x 'run --quiet'"
+    ],
+    "use_new_terminal": false,
+    "reveal": "always",
+  }
+]
